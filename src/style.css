@@ -1,0 +1,15 @@
+:root {
+  --color-light-blue: #52c6fc;
+  --color-orange: #c77700;
+  --color-pale-white: #fbfafa;
+  --color-card-orange: #ffe0b2;
+  --color-text: #0046a9;
+
+
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+}
