@@ -1,0 +1,30 @@
+{
+  "destinations": [
+    { "id": "cairo", "name": "Cairo", "country": "Egypt", "image": "/Cairo.webp", "description": "Ancient pyramids, the Nile river, and a city that never really sleeps.", "timezone": "Africa/Cairo" },
+    { "id": "tokyo", "name": "Tokyo", "country": "Japan", "image": "/Tokyo.jpg", "description": "A fast-moving blend of neon districts, quiet temples, and great food.", "timezone": "Asia/Tokyo" },
+    { "id": "paris", "name": "Paris", "country": "France", "image": "/paris.jpg", "description": "Iconic landmarks, riverside walks, and world-class food and art.", "timezone": "Europe/Paris" },
+    { "id": "marrakech", "name": "Marrakech", "country": "Morocco", "image": "/marrakech.jpg", "description": "Busy souks, courtyard riads, and the colors of the Medina.", "timezone": "Africa/Casablanca" },
+    { "id": "dubai", "name": "Dubai", "country": "UAE", "image": "/Dubai.webp", "description": "Futuristic skyscrapers, desert dunes, and luxury shopping.", "timezone": "Asia/Dubai" }
+  ],
+  "flights": [
+    { "id": "SK-418", "from": "Copenhagen", "to": "Cairo", "departure": "2026-10-14T07:40:00.000Z", "price": 134, "currency": "EUR", "airline": "Nordic Air", "duration": "3h 45m", "seatsAvailable": 4 },
+    { "id": "JP-927", "from": "Seoul", "to": "Tokyo", "departure": "2026-10-19T03:25:00.000Z", "price": 112, "currency": "USD", "airline": "Pacific Wings", "duration": "2h 20m", "seatsAvailable": 6 },
+    { "id": "IC-203", "from": "London", "to": "Paris", "departure": "2026-11-02T12:10:00.000Z", "price": 96, "currency": "GBP", "airline": "Iceland Connect", "duration": "3h 10m", "seatsAvailable": 3 },
+    { "id": "AT-551", "from": "Madrid", "to": "Marrakech", "departure": "2026-11-11T15:55:00.000Z", "price": 88, "currency": "EUR", "airline": "Atlas Hopper", "duration": "1h 55m", "seatsAvailable": 9 },
+    { "id": "CA-730", "from": "San Francisco", "to": "Dubai", "departure": "2026-12-05T18:30:00.000Z", "price": 157, "currency": "CAD", "airline": "Coastal Air", "duration": "2h 18m", "seatsAvailable": 5 }
+  ],
+  "users": [
+    { "id": "USR-184", "name": "Lena Fischer", "email": "lena.fischer@example.test", "role": "customer", "country": "Germany", "joinedAt": "2025-09-12" },
+    { "id": "USR-295", "name": "Omar Haddad", "email": "omar.haddad@example.test", "role": "customer", "country": "Jordan", "joinedAt": "2026-01-23" },
+    { "id": "USR-316", "name": "Camille Bernard", "email": "camille.bernard@example.test", "role": "customer", "country": "France", "joinedAt": "2025-11-03" },
+    { "id": "USR-427", "name": "Priya Nair", "email": "priya.nair@example.test", "role": "customer", "country": "India", "joinedAt": "2026-03-17" },
+    { "id": "USR-538", "name": "Mateo Silva", "email": "mateo.silva@example.test", "role": "customer", "country": "Brazil", "joinedAt": "2026-06-08" }
+  ],
+  "bookings": [
+    { "id": "BK-74920", "userId": "USR-316", "flightId": "SK-418", "status": "confirmed", "cabin": "economy", "createdAt": "2026-08-03T10:22:00.000Z" },
+    { "id": "BK-83911", "userId": "USR-538", "flightId": "JP-927", "status": "pending", "cabin": "economy", "createdAt": "2026-08-06T16:41:00.000Z" },
+    { "id": "BK-12865", "userId": "USR-184", "flightId": "IC-203", "status": "confirmed", "cabin": "premium economy", "createdAt": "2026-08-12T08:05:00.000Z" },
+    { "id": "BK-91547", "userId": "USR-295", "flightId": "AT-551", "status": "cancelled", "cabin": "economy", "createdAt": "2026-08-21T19:18:00.000Z" },
+    { "id": "BK-36209", "userId": "USR-427", "flightId": "CA-730", "status": "confirmed", "cabin": "business", "createdAt": "2026-08-29T13:54:00.000Z" }
+  ]
+}
