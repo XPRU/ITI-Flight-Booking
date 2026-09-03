@@ -16,11 +16,10 @@ import Footer from './components/Footer.vue';
 
 <style scoped>
 .container {
-  max-width: 1400px;
-  margin: 30px auto;
-  border-radius: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
   overflow: hidden;
-  background-color: var(--color-pale-white); 
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  background-color: var(--color-white);
+  box-shadow: 0 10px 40px rgba(20, 33, 61, 0.08);
 }
 </style>

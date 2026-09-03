@@ -1,53 +1,69 @@
 <template>
-<nav class="navbar">
-    <div class="logo">UFLY</div>
-    <ul class="NavLinks">
-        <li>Home</li>
-        <li>Popular Destinations</li>
-        <li>Contact</li>
+<nav class="navbar" aria-label="Main navigation">
+  <a class="logo" href="#top" aria-label="UFLY home"><span>U</span>FLY</a>
+  <ul class="nav-links">
+    <li><a href="#top">Home</a></li>
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#contact">Contact</a></li>
     </ul>
-    <input type="text" placeholder="Search Flight" class="SearchBar">
-
+  <a class="nav-action" href="#search">Search flights <span aria-hidden="true">&#8594;</span></a>
 </nav>
 </template>
 
 <style scoped>
-.navbar{
-    background-color: var(--color-light-blue);
-    padding: 15px 25px;
+.navbar {
+    background-color: var(--color-white);
+    padding: 22px clamp(24px, 5vw, 72px);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    gap: 40px;
 }
 .logo {
-  background-color: var(--color-card-orange) ;
-  border-radius:50% ;
+  color: var(--color-ink);
+  text-decoration: none;
   font-weight: bold;
-  font-size: 20px;
-  color: var(--color-orange);
+  font-size: 22px;
+  letter-spacing: 2px;
 }
-.NavLinks {
-  color: var(--color-text);
+.logo span {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-right: 3px;
+  border-radius: 50%;
+  background: var(--color-coral);
+  color: var(--color-white);
+}
+.nav-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 28px;
+  flex: 1;
   margin: 0;
   padding: 0;
-  cursor: pointer;
+}
+.nav-links a {
+  color: var(--color-muted);
+  text-decoration: none;
+  font-size: 14px;
   font-weight: bold;
-  
-
 }
-.SearchBar {
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: none;
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--color-teal);
 }
-.SearchBar{
-    border-radius: 20px;
+.nav-action {
+  color: var(--color-teal);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
 }
+.nav-action span { margin-left: 8px; font-size: 18px; }
 
-
+@media (max-width: 620px) {
+  .navbar { gap: 18px; flex-wrap: wrap; }
+  .nav-links { order: 3; flex-basis: 100%; justify-content: space-between; gap: 10px; }
+}
 
 </style>

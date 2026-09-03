@@ -1,15 +1,26 @@
 :root {
-  --color-light-blue: #52c6fc;
-  --color-orange: #c77700;
-  --color-pale-white: #fbfafa;
-  --color-card-orange: #ffe0b2;
-  --color-text: #0046a9;
-
-
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --color-ink: #14213d;
+  --color-muted: #687386;
+  --color-sky: #eaf5f7;
+  --color-teal: #087e8b;
+  --color-coral: #f2645a;
+  --color-white: #ffffff;
+  --color-border: #dce5e7;
+  font-family: 'Trebuchet MS', 'Gill Sans', sans-serif;
   color-scheme: light;
 }
 
 body {
   margin: 0;
+  background: #f6f8f7;
+  color: var(--color-ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input {
+  font: inherit;
 }
