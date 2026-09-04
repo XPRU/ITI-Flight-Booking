@@ -11,6 +11,10 @@ const loading = ref(true)
 function formatDate(iso) {
   return new Date(iso).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
 }
+function bookingflight(){
+  localStorage.setItem('bookingflight',JSON.stringify(flight.value))
+  router.push('/Mybooking')
+}
 
 onMounted(async () => {
   const [flightsRes, destinationsRes] = await Promise.all([
@@ -49,7 +53,7 @@ onMounted(async () => {
           <div><span class="label">Seats left</span><span class="value">{{ flight.seatsAvailable }}</span></div>
           <div><span class="label">Price</span><span class="value price">{{ flight.price }} {{ flight.currency }}</span></div>
         </div>
-        <button class="book-btn">Book this flight <span aria-hidden="true">&#8594;</span></button>
+        <button class="book-btn" @click="bookingflight">Book this flight <span aria-hidden="true">&#8594;</span></button>
       </div>
     </div>
   </section>
