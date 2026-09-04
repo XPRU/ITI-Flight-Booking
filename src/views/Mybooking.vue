@@ -58,9 +58,17 @@ margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
     border:1px solid var(--color-border);
-    box-shadow:0 6px 18px rgba(20, 33,61, 0.06);
     margin-bottom: 30px;
+    box-shadow:0 6px 18px rgba(20, 33,61, 0.06);
+         transition: transform 1s ease ;
 }
+   
+.booking-card:hover{
+    
+    transform: translateY(-2px);
+}
+
+
 .btn-cancel{
  margin-top:20px;
  padding: 10px 20px;
@@ -71,5 +79,8 @@ margin-bottom: 10px;
  font-weight: bold;
 cursor: pointer;
 }
+
+
+
  
 </style>
