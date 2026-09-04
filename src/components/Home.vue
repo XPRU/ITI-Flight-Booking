@@ -44,13 +44,23 @@ const countrys = ref([])
 const selectedFrom = ref(false)
 const selectedTo = ref(false)
 
-
 async function getcountrys() {
   try { const response = await fetch( 'http://localhost:3000/api/destinations')
     if (!response.ok) {
       throw new Error(`HTTP Error: ${response.status}`) }
     const data = await response.json()
-    countrys.value = data
+    countrys.value = data 
+    const flightrespons=await fetch('http://localhost:3000/api/flights')
+    const flights=await flightrespons.json()
+      flights.forEach(flight => {
+  if (!countrys.value.some(city => city.name === flight.from)) {
+    countrys.value.push({ name: flight.from })
+  }
+
+  if (!countrys.value.some(city => city.name === flight.to)) {
+    countrys.value.push({ name: flight.to })
+  }
+})
   } catch (error) {
     console.error('Error loading destinations:', error)
   }}
@@ -79,7 +89,6 @@ function selectTo(country) {
   selectedTo.value = true
 }
 async function searchFlights() {
-
   if (!fromsearch.value || !tosearch.value || !departureDate.value) {
     alert('Please select From, To and Departure date.')
     return
@@ -90,13 +99,14 @@ async function searchFlights() {
     if (!response.ok) {
       throw new Error(`HTTP Error: ${response.status}`) }
     const flights = await response.json()
-    const results = flights.filter(flight => {
+
+    const results = flights.filter(flight => { 
+    
       const flightDate = flight.departure.split('T')[0]
       return (
-        flight.from.toLowerCase() === fromsearch.value.toLowerCase() &&
-        flight.to.toLowerCase() === tosearch.value.toLowerCase() &&
-        flightDate === departureDate.value
-      )
+        flight.from.trim().toLowerCase() === fromsearch.value.trim().toLowerCase() &&
+        flight.to.trim().toLowerCase() === tosearch.value.trim().toLowerCase() &&
+       flightDate === departureDate.value)
     })
     localStorage.setItem(
       'searchResults',
