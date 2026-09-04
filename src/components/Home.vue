@@ -111,7 +111,6 @@ async function searchFlights() {
         date: departureDate.value
       })
     )
-
     router.push('/flights')
 
   } catch (error) {
