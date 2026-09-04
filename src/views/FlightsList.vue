@@ -21,11 +21,17 @@ function openFlight(id) {
 onMounted(async () => {
   const [flightsRes, destinationsRes] = await Promise.all([
     fetch('http://localhost:3000/api/flights'),
-    fetch('http://localhost:3000/api/destinations')
-  ])
-  flights.value = await flightsRes.json()
-  destinations.value = await destinationsRes.json()
-  loading.value = false
+    fetch('http://localhost:3000/api/destinations')])
+    const allflights= await flightsRes.json()
+    destinations.value=await destinationsRes.json()
+    const searchResults =localStorage.getItem('searchResults')
+    if (searchResults && JSON.parse(searchResults).length > 0) {
+    flights.value = JSON.parse(searchResults)}
+    
+    else{
+      flights.value=allflights
+    }
+    loading.value=false
 })
 </script>
 
