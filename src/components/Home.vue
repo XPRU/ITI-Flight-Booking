@@ -7,11 +7,9 @@
         <router-link to="/flights" class="browse-btn">
           Browse all flights <span aria-hidden="true">&#8594;</span>
         </router-link>
-      </div>
-
-    <form id="search" class="search-panel" @submit.prevent="searchFlights">
+      </div> 
+      <form id="search" class="search-panel" @submit.prevent="searchFlights">
     <div class="field"><label for="from">From</label>
-
       <input id="from" v-model="fromsearch" placeholder="Departure city"  @input="selectedFrom = false"/>
       <div v-if="fromsearch !== '' && !selectedFrom" class="suggestions">
         <div v-for="country in fromcountrys" :key="country.name" @click="selectFrom(country)" >
@@ -28,68 +26,43 @@
         </div>
       </div>
     </div>
-
     <div class="field"> <label for="date">Departure</label>
-    <input id="date" type="date" v-model="departureDate"/>
-    </div>
-
-    <button type="submit">  Find flights
-      <span aria-hidden="true">&#8594;</span>
-    </button>
+    <input id="date" type="date" v-model="departureDate"/> </div>
+    <button type="submit">  Find flights <span aria-hidden="true">&#8594;</span> </button>
   </form>
     </section>
 </template>
-
   <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
 const fromsearch = ref('')
 const tosearch = ref('')
 const departureDate = ref('')
-
 const countrys = ref([])
-
 const selectedFrom = ref(false)
 const selectedTo = ref(false)
 
 
 async function getcountrys() {
-  try {
-    const response = await fetch(
-      'http://localhost:3000/api/destinations'
-    )
-
+  try { const response = await fetch( 'http://localhost:3000/api/destinations')
     if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`)
-    }
-
+      throw new Error(`HTTP Error: ${response.status}`) }
     const data = await response.json()
-
     countrys.value = data
-
   } catch (error) {
     console.error('Error loading destinations:', error)
-  }
-}
-
-
+  }}
 onMounted(() => {
   getcountrys()
 })
-
-
 const fromcountrys = computed(() => {
   return countrys.value.filter(country =>
     country.name
       .toUpperCase()
       .startsWith(fromsearch.value.toUpperCase())
-  )
-})
-
-
+  )})
 const tocountrys = computed(() => {
   return countrys.value.filter(country =>
     country.name
@@ -97,20 +70,14 @@ const tocountrys = computed(() => {
       .startsWith(tosearch.value.toUpperCase())
   )
 })
-
-
 function selectFrom(country) {
   fromsearch.value = country.name
   selectedFrom.value = true
 }
-
-
 function selectTo(country) {
   tosearch.value = country.name
   selectedTo.value = true
 }
-
-
 async function searchFlights() {
 
   if (!fromsearch.value || !tosearch.value || !departureDate.value) {
@@ -118,36 +85,23 @@ async function searchFlights() {
     return
   }
 
-  try {
-
-    const response = await fetch(
-      'http://localhost:3000/api/flights'
-    )
+  try { const response = await fetch( 'http://localhost:3000/api/flights' )
 
     if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`)
-    }
-
+      throw new Error(`HTTP Error: ${response.status}`) }
     const flights = await response.json()
-
-
     const results = flights.filter(flight => {
-
       const flightDate = flight.departure.split('T')[0]
-
       return (
         flight.from.toLowerCase() === fromsearch.value.toLowerCase() &&
         flight.to.toLowerCase() === tosearch.value.toLowerCase() &&
         flightDate === departureDate.value
       )
     })
-
-
     localStorage.setItem(
       'searchResults',
       JSON.stringify(results)
     )
-
 
     localStorage.setItem(
       'searchData',
@@ -157,7 +111,6 @@ async function searchFlights() {
         date: departureDate.value
       })
     )
-
 
     router.push('/flights')
 
