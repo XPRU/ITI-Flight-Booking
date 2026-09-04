@@ -23,13 +23,15 @@ onMounted(async () => {
     fetch('http://localhost:3000/api/flights'),
     fetch('http://localhost:3000/api/destinations')])
     const allflights= await flightsRes.json()
+    destinations.value=await destinationsRes.json()
     const searchResults =localStorage.getItem('searchResults')
-    if(searchResults){
-      flights.value=JSON.parse(searchResults)
-    }
+    if (searchResults && JSON.parse(searchResults).length > 0) {
+    flights.value = JSON.parse(searchResults)}
+    
     else{
       flights.value=allflights
     }
+    loading.value=false
 })
 </script>
 
