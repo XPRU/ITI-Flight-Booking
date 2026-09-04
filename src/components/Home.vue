@@ -4,6 +4,9 @@
         <p class="eyebrow">TRAVEL WITH PURPOSE</p>
         <h1>Your next story<br /><em>starts in the sky.</em></h1>
         <p class="paragraph">Search, compare, and book flights to places that stay with you.</p>
+        <router-link to="/flights" class="browse-btn">
+          Browse all flights <span aria-hidden="true">&#8594;</span>
+        </router-link>
       </div>
       <form id="search" class="search-panel" @submit.prevent>
         <div class="field"><label for="from">From</label><input id="from" placeholder="Departure city" /></div>
@@ -44,6 +47,19 @@ h1 em { color: #ffb4a8; font-style: normal; }
   font-size: 17px;
   line-height: 1.6;
 }
+.browse-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 12px 22px;
+  border-radius: 5px;
+  background: var(--color-coral);
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  width: fit-content;
+}
+.browse-btn:hover { background: #d9524b; }
 .search-panel {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr auto;
@@ -67,6 +83,4 @@ button span { margin-left: 10px; }
   .search-panel { grid-template-columns: 1fr 1fr; }
   .search-panel button { grid-column: 1 / -1; }
 }
-
-
 </style>

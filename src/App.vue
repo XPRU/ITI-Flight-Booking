@@ -1,15 +1,12 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
-import Home from './components/Home.vue';
-import PopularDestinations from './components/PopularDestinations.vue';
-import Footer from './components/Footer.vue';
+import Footer from './components/Footer.vue'
 </script>
 
 <template>
   <div class="container">
     <Navbar />
-    <Home />
-    <PopularDestinations />
+    <router-view />
     <Footer />
   </div>
 </template>

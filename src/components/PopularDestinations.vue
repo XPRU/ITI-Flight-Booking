@@ -2,14 +2,14 @@
   <section id="destinations" class="destinations">
     <div class="section-heading"><p class="eyebrow">GO SOMEWHERE NEW</p><h2>Popular destinations</h2><p>Handpicked places for your next great escape.</p></div>
     <div class="cards">
-      <article class="card" v-for="place in places" :key="place.name">
-        
-        
+      <article class="card" v-for="place in places" :key="place.name" @click="viewFlight(place.name)">
+
+
         <div class="image-container">
           <img :src="place.image" :alt="place.name" />
         </div>
 
-        
+
         <div class="text-container">
           <div class="card-title"><h3>{{ place.name }}</h3><span aria-hidden="true">&#8599;</span></div>
           <p>{{ place.description }}</p>
@@ -21,6 +21,9 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 const places = [
   {
     name: 'Paris',
@@ -38,6 +41,12 @@ const places = [
     description: 'Modern architecture, luxury shopping, and vibrant nightlife in the desert.'
   }
 ]
+
+async function viewFlight(cityName) {
+  const res = await fetch(`http://localhost:3000/api/flights?to=${encodeURIComponent(cityName)}`)
+  const flights = await res.json()
+  if (flights.length > 0) router.push(`/flights/${flights[0].id}`)
+}
 </script>
 
 <style scoped>
@@ -61,11 +70,12 @@ const places = [
   border-radius: 8px;
   width: 100%;
   min-height: 340px;
-  overflow: hidden; 
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 24px rgba(20, 33, 61, .07);
   transition: transform .3s ease, box-shadow .3s ease;
+  cursor: pointer;
 }
 .card:hover {
   transform: translateY(-5px);
@@ -76,14 +86,14 @@ const places = [
 .image-container {
   height: 190px;
   width: 100%;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .image-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease; 
+  transition: transform 0.4s ease;
 }
 
 .card:hover .image-container img {
@@ -96,7 +106,7 @@ const places = [
   padding: 20px;
   display: flex;
   flex-direction: column;
-  text-align: left; 
+  text-align: left;
 }
 
 .text-container h3 {
