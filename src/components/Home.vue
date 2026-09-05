@@ -7,6 +7,7 @@
         <router-link to="/flights" class="browse-btn">
           Browse all flights <span aria-hidden="true">&#8594;</span>
         </router-link>
+        
       </div> 
       <form id="search" class="search-panel" @submit.prevent="searchFlights">
     <div class="field"><label for="from">From</label>

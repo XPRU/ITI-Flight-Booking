@@ -1,14 +1,34 @@
 <template>
 <nav class="navbar" aria-label="Main navigation">
-  <a class="logo" href="#top" aria-label="UFLY home"><span>U</span>FLY</a>
+  <a class="logo" href="#top" @click.prevent="scrollToSection('top')" aria-label="UFLY home"><span>U</span>FLY</a>
   <ul class="nav-links">
-    <li><a href="#top">Home</a></li>
-    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#top" @click.prevent="scrollToSection('top')">Home</a></li>
+    <li><a href="#destinations" @click.prevent="scrollToSection('destinations')">Destinations</a></li>
+    <li><router-link to="/Mybooking">My Bookings</router-link></li>
     <li><a href="#contact">Contact</a></li>
-    </ul>
-  <a class="nav-action" href="#search">Search flights <span aria-hidden="true">&#8594;</span></a>
+  </ul>
+  <a class="nav-action" href="#search" @click.prevent="scrollToSection('search')">Search flights <span aria-hidden="true">&#8594;</span></a>
 </nav>
 </template>
+
+<script setup>
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
+
+function scrollToSection(id) {
+  if (route.path !== '/') {
+    router.push('/').then(() => {
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      })
+    })
+  } else {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+</script>
 
 <style scoped>
 .navbar {
@@ -65,5 +85,4 @@
   .navbar { gap: 18px; flex-wrap: wrap; }
   .nav-links { order: 3; flex-basis: 100%; justify-content: space-between; gap: 10px; }
 }
-
 </style>

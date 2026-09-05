@@ -1,158 +1,143 @@
 <template>
-    <section class="mybooking">
-       <h1>My booking</h1>
-       <div class="booking-card" v-if="booking && !confirm ">
-    <h3>{{ booking.from }} &#8594;{{ booking.to }}</h3>
-    <p>airline:{{ booking.airline }}</p>
-     <p>price:{{ booking.price }} {{ booking.currency }}</p>
-     <p>Duration:{{ booking.duration }}</p>
-     <p>seatsAvailable:{{ booking.seatsAvailable }}</p>
-     <button class="btn-cancel" @click="cancelbooking"> cancelbooking</button>
-     <button  class="btn-confir" @click="confirmbooking">confirmbooking</button>
-     </div>
-     <div v-if="confirm"> 
-         <p class=" confirmp"> <span class="confirms">&#10003;</span> تم الحجز بنجاح</p>
-     </div>
-       <div  v-if="!booking">
-        <p class="cancelp"><span class="cancel">X</span>تم الغاء الحجز </p>
-       </div>
-       <div class="action">
-        <button @click="gohome"><span>&#8592;</span>gohome</button> 
-        <button @click="goflights" class="btn-filgts"> <span >&#8592;</span>goflights</button>
-       </div>
-    </section>
+  <section class="mybooking">
+    <button class="back-btn" @click="gohome">&#8592; Back to home</button>
+    <h1>My bookings</h1>
+
+    <p v-if="!bookings.length" class="empty">You have no bookings yet.</p>
+
+    <div class="booking-list">
+      <div class="booking-card" v-for="item in bookings" :key="item.id">
+        <div class="booking-info">
+          <h3>{{ item.flight.from }} <span aria-hidden="true">&#8594;</span> {{ item.flight.to }}</h3>
+          <p>{{ item.flight.airline }} &bull; {{ item.flight.duration }}</p>
+          <p>{{ item.flight.price }} {{ item.flight.currency }} &bull; {{ item.flight.seatsAvailable }} seats left</p>
+          <p class="status" :class="item.status">{{ item.status }}</p>
+        </div>
+        <div class="booking-actions">
+          <button v-if="item.status === 'pending'" class="btn-confirm" @click="confirmBooking(item.id)">Confirm</button>
+          <button class="btn-cancel" @click="cancelBooking(item.id)">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-flights" @click="goflights">Browse more flights <span aria-hidden="true">&#8594;</span></button>
+  </section>
 </template>
+
 <script setup>
- import { onMounted, ref } from 'vue';
-import {  useRouter } from 'vue-router';
- const router =useRouter()
- const booking =ref(null)
- const confirm= ref(false)
- onMounted(()=>{
-    const savbooking=localStorage.getItem('bookingflight')
-    if(savbooking){
-        booking.value=JSON.parse(savbooking)
-    }
- })
-  async function confirmbooking(){
-    confirm.value=true
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
+const bookings = ref([])
+
+onMounted(() => {
+  const saved = sessionStorage.getItem('uflyBookings')
+  if (saved) bookings.value = JSON.parse(saved)
+})
+
+function save() {
+  sessionStorage.setItem('uflyBookings', JSON.stringify(bookings.value))
 }
-  
-
- function cancelbooking(){
-    localStorage.removeItem('bookingflight')
-    booking.value=null
- }
-  function gohome() {
-        router.push( '/')
-    }
-    function goflights() {
-        router.push('/flights')
-    }
+function confirmBooking(id) {
+  const item = bookings.value.find(b => b.id === id)
+  if (item) item.status = 'confirmed'
+  save()
+}
+function cancelBooking(id) {
+  bookings.value = bookings.value.filter(b => b.id !== id)
+  save()
+}
+function gohome() {
+  router.push('/')
+}
+function goflights() {
+  router.push('/flights')
+}
 </script>
+
 <style scoped>
-.Mybooking{
-    min-height:100vh;
-    padding: 90px clamp(24px,8vw,110px);
-    background: var(--color-sky);
+.mybooking {
+  min-height: 100vh;
+  padding: 90px clamp(24px, 8vw, 110px);
+  background: var(--color-sky);
 }
-.Mybooking h1{
- color: var(--color-ink);
- font-size:50px;
- margin-bottom:25px;
-}
- .Mybooking div{
-    max-width: 700px;
-}
-.Mybooking h3{
-    color: var(--color-ink);
-    font-size:25px;
-    margin-bottom:20px;
-}
-.Mybooking p{
-color: var(--color-ink);
-font-size: 20px;
-margin-bottom: 10px;
-}
-.booking-card{
-    background: var( --color-white);
-    padding: 10px;
-    border-radius: 10px;
-    border:1px solid var(--color-border);
-    margin-bottom: 30px;
-    box-shadow:0 2px 8px rgba(20, 33,61, 0.02);
-    transition: 0.5s ease;
-}
-   
-.booking-card:hover{
-    
-    transform: translateY(-2px);
-    box-shadow:0 3px 10px rgba(20, 33,61, 0.04);
-}
-
-
-.btn-cancel{
-    min-width: 150px;
- margin-top:20px;
- padding: 10px 20px;
- border: none;
- border-radius: 7px;
- background: var(--color-coral);
- color: var(--color-white);
- font-weight: bold;
- cursor: pointer;
-
-}
-.cancel{
-    color:var(--color-coral);
-    font-size: 25px;
-    font-weight: bold;
-}
-.cancelp{
-    font-size: 25px;
-    color: var(--color-ink);
-    font-weight: bold;
-
-
-}
-.action {
-     display: flex;
-     flex-direction: column;
-     gap: 5px;
-     align-items:flex-start;
-}
-.action button{
-    background: none;
-    border: none;
-    font-size: 18px;
-    color: var(--color-teal);
-    margin-left:5px;
-}
-.btn-confir{
-    min-width: 150px;
-     margin-top:20px;
- padding: 10px 20px;
- border: none;
- border-radius: 7px;
- background: var(--color-coral);
- color: var(--color-white);
- font-weight: bold;
- cursor: pointer;
- margin: 10px;
-}
-
-.btn-filgts{
-    margin-bottom: 20px;
-}
-.confirmp{
-     font-size: 25px;
-    color: var(--color-ink);
-    font-weight: bold;
-
-}
-.confirms{
+.back-btn {
+  background: none;
+  border: 0;
   color: var(--color-teal);
-  font-size: 30pxpx;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.mybooking h1 {
+  color: var(--color-ink);
+  font-size: 40px;
+  margin: 0 0 30px;
+}
+.empty {
+  color: var(--color-muted);
+  font-size: 18px;
+}
+.booking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 700px;
+  margin-bottom: 30px;
+}
+.booking-card {
+  background: var(--color-white);
+  padding: 24px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 24px rgba(20, 33, 61, .07);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.booking-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(20, 33, 61, .1);
+}
+.booking-info h3 { margin: 0 0 10px; color: var(--color-ink); font-size: 22px; }
+.booking-info p { margin: 0 0 6px; color: var(--color-muted); }
+.status { font-weight: bold; text-transform: capitalize; }
+.status.pending { color: var(--color-coral); }
+.status.confirmed { color: var(--color-teal); }
+.booking-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btn-confirm,
+.btn-cancel {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 7px;
+  color: var(--color-white);
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 130px;
+}
+.btn-confirm { background: var(--color-teal); }
+.btn-cancel { background: var(--color-coral); }
+.btn-flights {
+  padding: 14px 24px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--color-coral);
+  color: var(--color-white);
+  cursor: pointer;
+  font-weight: bold;
+}
+.btn-flights:hover { background: #d9524b; }
+@media (max-width: 600px) {
+  .booking-card { flex-direction: column; align-items: flex-start; }
+  .booking-actions { flex-direction: row; }
 }
 </style>

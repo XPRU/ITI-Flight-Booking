@@ -11,8 +11,22 @@ const loading = ref(true)
 function formatDate(iso) {
   return new Date(iso).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
 }
-function bookingflight(){
-  localStorage.setItem('bookingflight',JSON.stringify(flight.value))
+
+function bookingflight() {
+  const user = sessionStorage.getItem('uflyUser')
+  if (!user) {
+    sessionStorage.setItem('pendingBooking', JSON.stringify(flight.value))
+    router.push('/login')
+    return
+  }
+  const bookings = JSON.parse(sessionStorage.getItem('uflyBookings') || '[]')
+  bookings.push({
+    id: 'BK-' + Date.now(),
+    flight: flight.value,
+    user: JSON.parse(user),
+    status: 'pending'
+  })
+  sessionStorage.setItem('uflyBookings', JSON.stringify(bookings))
   router.push('/Mybooking')
 }
 
