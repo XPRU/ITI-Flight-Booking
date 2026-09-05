@@ -17,8 +17,8 @@
         <p class="cancelp"><span class="cancel">X</span>تم الغاء الحجز </p>
        </div>
        <div class="action">
-        <button @click="gohome">gohome <span>&rarr;</span></button>
-        <button @click="goflights" class="btn-filgts">goflights <span>&rarr;</span></button>
+        <button @click="gohome"><span>&#8592;</span>gohome</button> 
+        <button @click="goflights" class="btn-filgts"> <span >&#8592;</span>goflights</button>
        </div>
     </section>
 </template>
